@@ -1,0 +1,61 @@
+version: 1
+project:
+  name: Concordance
+  locale: en
+  theme: ./theme.yaml
+  edit_url: https://github.com/concordance-wiki/{source}/edit/main/{path}
+profile: ./profile.yaml
+applications:
+  - id: concordance
+    title: Concordance
+    status: active
+domains:
+  - id: ingestion
+    title: Ingestion
+    match: ["**/source*", "**/type-cascade*", "**/document*", "**/resource*", "**/twin-resources*", "**/processes/build*"]
+  - id: inference
+    title: Inference
+    match: ["**/link*", "**/confidence*", "**/provenance*", "**/occurrence*", "**/keyword-page*", "**/entity*", "**/model*", "**/profile*", "**/domain*", "**/lock*", "**/rules/**", "**/decisions/**"]
+  - id: site
+    title: Site
+    match: ["**/screens/**", "**/api/**"]
+  - id: lint
+    title: Lint
+    match: ["**/finding*", "**/check*", "**/processes/lint*", "**/plugin*", "**/preset*", "**/golden-corpus*"]
+sources:
+  - name: glossary
+    git: https://github.com/concordance-wiki/demo-glossary.git
+    ref: v0.1.0
+    locale: en
+    type: term
+    glossary: true
+    application: concordance
+  - name: specs
+    git: https://github.com/concordance-wiki/demo-specs.git
+    ref: v0.1.0
+    locale: en
+    application: concordance
+    rules:
+      - match: { path: "screens/**" }
+        set: { type: screen }
+      - match: { path: "processes/**" }
+        set: { type: process }
+      - match: { path: "rules/**" }
+        set: { type: rule }
+      - match: { path: "objects/**" }
+        set: { type: business_object }
+      - match: { path: "api/**" }
+        set: { type: api }
+      - match: { path: "decisions/**" }
+        set: { type: decision }
+staleness:
+  warn_after_days: { default: 120 }
+inference:
+  glossary_sources: [glossary]
+  stopwords: [./stopwords.en.txt, ./stopwords.domain.txt]
+  keyword_pages: { min_occurrences: 3, min_files: 2 }
+  neighbours: { k: 50 }
+build:
+  output: ./dist
+  fail_on: { errors: true, unconverted_max: 10 }
+lock: ./concordance.lock.yaml

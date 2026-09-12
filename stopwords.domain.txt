@@ -1,0 +1,8 @@
+# Words of this corpus that are frequent without being business terms.
+file
+files
+folder
+page
+pages
+tool
+version

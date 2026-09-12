@@ -1,0 +1,30 @@
+name: Concordance
+logo: https://raw.githubusercontent.com/concordance-wiki/concordance/main/brand/concordance-mark.svg
+favicon: https://raw.githubusercontent.com/concordance-wiki/concordance/main/brand/favicon.svg
+font:
+  display: Instrument Serif
+  ui: Instrument Sans
+  mono: IBM Plex Mono
+radius: 8
+light:
+  bg: "#F6F5F2"
+  surface: "#FFFFFF"
+  border: "#E4E1DA"
+  ink: "#16181B"
+  muted: "#4E5259"
+  accent: "#C24E24"
+dark:
+  bg: "#0E0F11"
+  surface: "#16181B"
+  border: "#26292E"
+  ink: "#E8E6E1"
+  muted: "#8B9199"
+  accent: "#E8703A"
+default_mode: system
+footer:
+  text: The wiki of the Concordance project, built by Concordance from its own glossary and specifications.
+  links:
+    - { label: Source code, url: "https://github.com/concordance-wiki/concordance" }
+    - { label: Glossary, url: "https://github.com/concordance-wiki/demo-glossary" }
+    - { label: Specifications, url: "https://github.com/concordance-wiki/demo-specs" }
+  mention_tool: true

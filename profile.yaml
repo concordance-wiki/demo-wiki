@@ -1,0 +1,6 @@
+# Project profile, merged over the default profile of the tool.
+# Empty on purpose: the default profile covers this wiki.
+version: 1
+types: {}
+relations: {}
+confidence: {}
