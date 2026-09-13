@@ -1,15 +1,29 @@
 name: wiki
 
-# Publishes the Concordance project wiki to GitHub Pages. Manual dispatch only
-# until the concordance command is published; the push and schedule triggers
-# are enabled at that point.
+# Builds the Concordance project wiki from its glossary and its specifications
+# and publishes it on GitHub Pages: on every push to this repository, every
+# morning, on manual dispatch, and on the `content-updated` dispatch the two
+# content repositories send after a green lint on their main branch.
+#
+# Interim form until the first release of the tool: the command line is built
+# from a checkout of the tool's repository at main. Once the `concordance`
+# package is published, the three "Build the command line" steps become
+# `npm install --global concordance` and the build step `concordance build`,
+# as the pipelines guide of the tool shows.
+#
+# One human step: in the settings of this repository, set Pages → Source to
+# "GitHub Actions" once.
 on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 5 * * *"
   workflow_dispatch:
+  repository_dispatch:
+    types: [content-updated]
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -20,21 +34,53 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check out the tool
+        uses: actions/checkout@v4
+        with:
+          repository: concordance-wiki/concordance
+          ref: main
+          path: .tool
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: .tool/package.json
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm install --global concordance
-      - run: concordance validate-config
-      - run: concordance build
+          node-version-file: .tool/.nvmrc
+          cache: pnpm
+          cache-dependency-path: .tool/pnpm-lock.yaml
+      - name: Build the command line
+        working-directory: .tool
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+      - uses: actions/cache@v4
+        with:
+          path: .concordance-cache
+          key: concordance-cache-${{ github.run_id }}
+          restore-keys: concordance-cache-
+      - run: node .tool/packages/cli/dist/bin.js validate-config
+      - name: Build the wiki
+        # The sources are cloned at their `main` ref; an error finding fails here, as build.fail_on says.
+        run: node .tool/packages/cli/dist/bin.js build
+      - name: Summary
+        # The findings per severity and per check of dist/build.log.json, on the page of the run.
+        run: |
+          {
+            echo "## Wiki build"
+            node -e 'const s = require("./dist/build.log.json").summary.findings; for (const [k, v] of [...Object.entries(s.bySeverity), ...Object.entries(s.byCheck)]) console.log(`- ${k}: ${v}`)'
+          } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

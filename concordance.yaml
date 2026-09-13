@@ -10,29 +10,203 @@ applications:
     title: Concordance
     status: active
 domains:
+  # Globs are evaluated on the path of every file relative to its source root, whatever
+  # the source: a bare file name files a term of the flat glossary, a folder pattern a note
+  # of the specifications. The deepest matching domain wins, then the last declared.
+  - id: quality
+    title: Quality
+    match:
+      - "build-log.md"
+      - "check.md"
+      - "check-family.md"
+      - "contract-checks.md"
+      - "determinism.md"
+      - "document-checks.md"
+      - "finding.md"
+      - "forge-report.md"
+      - "global-check.md"
+      - "golden-corpus.md"
+      - "identifier-and-type-checks.md"
+      - "link-checks.md"
+      - "linter.md"
+      - "local-check.md"
+      - "plugin.md"
+      - "plugin-checks.md"
+      - "preset.md"
+      - "remediation.md"
+      - "scope.md"
+      - "severity.md"
+      - "source-checks.md"
+      - "vocabulary-and-filing-checks.md"
+      - "contribution-point.md"
+      - "rules/**"
+      - "processes/lint.md"
+      - "processes/release.md"
+      - "objects/finding.md"
+      - "api/plugin-api.md"
+      - "decisions/findings-not-failures.md"
+      - "decisions/reproducible-builds.md"
+      - "decisions/gpl-licence.md"
+      - "decisions/core-plugins-preset.md"
+      - "roles/quality-owner.md"
+      - "roles/maintainer.md"
   - id: ingestion
     title: Ingestion
-    match: ["**/source*", "**/type-cascade*", "**/document*", "**/resource*", "**/twin-resources*", "**/processes/build*"]
+    match:
+      - "README.md"
+      - "api.md"
+      - "application.md"
+      - "attribute.md"
+      - "locale.md"
+      - "rule.md"
+      - "screen.md"
+      - "build.md"
+      - "configuration.md"
+      - "configuration-repository.md"
+      - "conversion.md"
+      - "converter.md"
+      - "corpus.md"
+      - "cue.md"
+      - "document.md"
+      - "extracted-text.md"
+      - "fingerprint-cache.md"
+      - "frontmatter.md"
+      - "identifier.md"
+      - "knowledge-repository.md"
+      - "markdown.md"
+      - "note.md"
+      - "pipeline.md"
+      - "privacy.md"
+      - "project.md"
+      - "pseudonymisation.md"
+      - "reader.md"
+      - "representation.md"
+      - "section.md"
+      - "source.md"
+      - "staleness.md"
+      - "step.md"
+      - "transcript.md"
+      - "twin-resources.md"
+      - "type.md"
+      - "type-cascade.md"
+      - "version.md"
+      - "README.md"
+      - "processes/build-pipeline.md"
+      - "processes/onboarding-a-repository.md"
+      - "processes/adding-a-language-pack.md"
+      - "processes/publishing-the-wiki.md"
+      - "batches/**"
+      - "objects/source.md"
+      - "objects/resource.md"
+      - "objects/representation.md"
+      - "objects/build.md"
+      - "decisions/standard-markdown-only.md"
+      - "decisions/deterministic-identifiers.md"
+      - "decisions/locale-per-source.md"
+      - "decisions/lock-file-for-human-decisions.md"
+      - "decisions/single-extraction-path.md"
+      - "roles/integrator.md"
+      - "roles/author.md"
   - id: inference
     title: Inference
-    match: ["**/link*", "**/confidence*", "**/provenance*", "**/occurrence*", "**/keyword-page*", "**/entity*", "**/model*", "**/profile*", "**/domain*", "**/lock*", "**/rules/**", "**/decisions/**"]
-  - id: site
-    title: Site
-    match: ["**/screens/**", "**/api/**"]
-  - id: lint
-    title: Lint
-    match: ["**/finding*", "**/check*", "**/processes/lint*", "**/plugin*", "**/preset*", "**/golden-corpus*"]
+    match:
+      - "co-occurrence.md"
+      - "confidence.md"
+      - "contract.md"
+      - "contract-import.md"
+      - "domain.md"
+      - "entity.md"
+      - "frontmatter-reference.md"
+      - "inference.md"
+      - "link.md"
+      - "link-source.md"
+      - "lock.md"
+      - "markdown-link.md"
+      - "model.md"
+      - "neighbourhood.md"
+      - "operation.md"
+      - "profile.md"
+      - "provenance.md"
+      - "relation.md"
+      - "objects/entity.md"
+      - "objects/link.md"
+      - "objects/neighbourhood.md"
+      - "objects/model.md"
+      - "objects/candidate.md"
+      - "data/**"
+      - "api/canonical-model.md"
+      - "api/model-query.md"
+      - "api/operations/**"
+      - "decisions/bounded-neighbourhood.md"
+      - "decisions/confidence-and-provenance-on-every-link.md"
+      - "decisions/minhash-for-twin-resources.md"
+      - "decisions/type-driven-neighbour-order.md"
+      - "decisions/declarative-profile.md"
+      - "decisions/links-are-authoritative.md"
+      - "rules/relation-typing.md"
+      - "rules/operation-matching.md"
+    subdomains:
+      - id: recognition
+        title: Recognition
+        match:
+          - "accompanying-word.md"
+          - "alias.md"
+          - "candidate-expression.md"
+          - "comparison-form.md"
+          - "dictionary.md"
+          - "homonym.md"
+          - "keyword.md"
+          - "keyword-page.md"
+          - "language-pack.md"
+          - "mention.md"
+          - "occurrence.md"
+          - "publication-threshold.md"
+          - "recognised-word.md"
+          - "section-mention.md"
+          - "stopword.md"
+          - "term.md"
+          - "objects/keyword-page.md"
+          - "decisions/keyword-page-threshold.md"
+          - "roles/glossary-owner.md"
+  - id: publication
+    title: Publication
+    match:
+      - "alphabetical-index.md"
+      - "fragment.md"
+      - "island.md"
+      - "passage.md"
+      - "search-index.md"
+      - "site.md"
+      - "slot.md"
+      - "textual-equivalent.md"
+      - "theme.md"
+      - "trail.md"
+      - "white-label.md"
+      - "screens/**"
+      - "decisions/static-first.md"
+      - "decisions/slots-islands-and-layers.md"
+      - "decisions/self-hosted-fonts.md"
+      - "decisions/fonts-from-a-third-party-host.md"
+      - "decisions/icu-message-catalogues.md"
+      - "decisions/purpose-built-contract-viewer.md"
+      - "decisions/purpose-built-search-index.md"
+      - "decisions/paginated-mentions.md"
+      - "decisions/white-label-by-default.md"
+      - "decisions/no-database.md"
+      - "rules/accessibility.md"
+      - "roles/reader.md"
+      - "roles/theme-author.md"
 sources:
   - name: glossary
     git: https://github.com/concordance-wiki/demo-glossary.git
-    ref: v0.1.0
+    ref: main
     locale: en
     type: term
     glossary: true
     application: concordance
   - name: specs
     git: https://github.com/concordance-wiki/demo-specs.git
-    ref: v0.1.0
+    ref: main
     locale: en
     application: concordance
     rules:
@@ -46,8 +220,16 @@ sources:
         set: { type: business_object }
       - match: { path: "api/**" }
         set: { type: api }
+      - match: { path: "api/operations/**" }
+        set: { type: endpoint }
       - match: { path: "decisions/**" }
         set: { type: decision }
+      - match: { path: "roles/**" }
+        set: { type: role }
+      - match: { path: "batches/**" }
+        set: { type: batch }
+      - match: { path: "data/**" }
+        set: { type: data_object }
 staleness:
   warn_after_days: { default: 120 }
 inference:
