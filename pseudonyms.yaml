@@ -1,0 +1,18 @@
+# The fictional participants of the working sessions of demo-briefs, mapped to
+# the stable pseudonyms the build publishes in their place. The names are
+# invented for the demonstration corpus, which is why this file is committed;
+# a real wiki keeps its dictionary out of every public repository.
+version: 1
+people:
+  "Anna Duval":
+    pseudonym: Participant-1
+    role: Maintainer
+  "Bram Kessler":
+    pseudonym: Participant-2
+    role: Author
+  "Chiara Lindqvist":
+    pseudonym: Participant-3
+    role: Integrator
+  "Dario Mensah":
+    pseudonym: Participant-4
+    role: Quality owner

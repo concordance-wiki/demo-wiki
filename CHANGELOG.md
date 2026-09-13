@@ -1,5 +1,33 @@
 # Changelog
 
+## Every feature
+
+A third source, [demo-briefs](https://github.com/concordance-wiki/demo-briefs), brings the kinds of file the wiki had never read: three working sessions, each a folder of minutes and WebVTT transcript, one of them with the deck shown and its PDF preview, and one framing deck with its preview and its notes. The configuration declares the four plugins the corpus needs, converts the decks with LibreOffice, enables pseudonymisation on a committed dictionary of the four fictional participants and publishes the transcripts; the specifications gain the OpenAPI contract of the model query API, kept next to its note, and a sketch embedded by the entity page; the glossary gains the meeting, the deck and the preview. The wiki built from the tool's own checkout, the sources read from local clones, before and after.
+
+| | Before | After |
+|---|---|---|
+| Sources | 2 | 3 |
+| Files read | 229 | 249 |
+| Entities | 1186 (109 terms, 959 keyword pages, 118 specifications) | 1480 (112 terms, 1246 keyword pages, 118 specifications, 4 briefs) |
+| Findings | 2262 (0 errors, 887 warnings, 1375 info) | 2490 (0 errors, 1094 warnings, 1396 info) |
+| `W-TERM-UNDEFINED` | 887 | 1094 |
+| `W-DUP-CANDIDATE` | 21 | 21 |
+| `I-TERM-HOMONYM` | 19 | 21 |
+| `I-REL-AMBIGUOUS` | 1335 | 1354 |
+| `W-DOC-NOMD`, `W-CONV-FAILED`, `W-CONTRACT-UNREACHABLE` | 0 | 0 |
+| Twin resources merged | 0 | 4 groups (11 files) |
+| Contracts imported | 0 | 1 (3 operations, all matched to a note) |
+| `concordance lint` on each content repository | 0 findings | 0 findings |
+
+What the tool found and what changed:
+
+- **Pseudonymisation is declared, not applied.** The page of every session says "Pseudonymised participants" and the configuration validates, but the cues, the fragment and the copied transcript still carry the names of the dictionary: the pipeline of this version never calls the pseudonymisation the core package ships. The names are invented, the dictionary is committed for that reason, and the scenario stays configured so that the first build that applies it shows the difference. Reported to the tool.
+- **A contract that was not one.** The plugin API note declared its manifest schema, a JSON schema at a URL that did not exist, under `contract:`; the importer, enabled for the first time, reported `W-CONTRACT-UNREACHABLE`. The note names the schema in its text and declares no contract. Fixed.
+- **The briefs merge as intended.** Every file of a session shares its base name, the minutes carry the title of the deck as their heading and declare their transcript under `source:`, the preview repeats the text of the deck: four groups, 11 files, no `W-DOC-NOMD`, and the profile declares `source` on the meeting type so that the declaration raises no `W-ATTRIBUTE-UNKNOWN`. A local source has no commit, so the "same commit" signal only appears in the published build; the groups are the same without it. The two `I-TERM-HOMONYM` added are the titles the deck, its preview and its notes share before the reconciliation folds them into one page.
+- **Plugins from a checkout.** The core of the command line cannot resolve the workspace plugins of the tool's checkout by their package names; the workflow links them into its `node_modules` until the preset is published. The dependency on LibreOffice is installed in the same workflow.
+- `W-TERM-UNDEFINED` grows by 207 and the keyword pages by 287: the spoken text of three transcripts and the slides of two decks bring expressions no note defines (`slide`, `deck`, `session`, `minutes`, `preview` among them, three of which now have a term). The next loop of the glossary starts from them, and from the words the transcripts repeat that `stopwords.domain.txt` should absorb.
+- Not shown: a dormant space on the home page. A source is a whole repository, and the newest change of every space is recent; a fourth source restricted to an archive folder would need a sub-folder root the configuration does not offer.
+
 ## Structure
 
 The two content repositories restructured so that the wiki shows every way a corpus can be described: thematic folders in the glossary, nested families in the specifications, domains by folder, typing by folder glob, file name pattern, suffix, default type and frontmatter, three applications, three stopword files, a lock file with real decisions, a profile that extends a type. The README of this repository lists the scenarios. The wiki built from the tool's own checkout, the sources read from local clones, before and after.

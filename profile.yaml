@@ -1,9 +1,15 @@
 # Project profile, merged over the default profile of the tool key by key.
-# One addition: a decision may name the decision that replaced it. The
+# Two additions. A decision may name the decision that replaced it: the
 # reference produces the `supersedes` relation in the other direction, from
 # the newer decision to this one, so that either note may record the change.
+# The minutes of a meeting may name their transcript under `source`, the key
+# the twin-resource reconciliation reads as a declaration, which the default
+# profile declares for documents only.
 version: 1
 types:
   decision:
     attributes:
       superseded_by: { type: ref, target: decision, relation: supersedes, inverse: true }
+  meeting:
+    attributes:
+      source: { type: string, label: { en: Source file, fr: Fichier source } }

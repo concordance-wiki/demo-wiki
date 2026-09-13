@@ -1,15 +1,18 @@
 name: wiki
 
-# Builds the Concordance project wiki from its glossary and its specifications
-# and publishes it on GitHub Pages: on every push to this repository, every
-# morning, on manual dispatch, and on the `content-updated` dispatch the two
-# content repositories send after a green lint on their main branch.
+# Builds the Concordance project wiki from its glossary, its specifications and
+# its briefs and publishes it on GitHub Pages: on every push to this repository,
+# every morning, on manual dispatch, and on the `content-updated` dispatch the
+# three content repositories send after a green lint on their main branch.
 #
 # Interim form until the first release of the tool: the command line is built
-# from a checkout of the tool's repository at main. Once the `concordance`
-# package is published, the three "Build the command line" steps become
+# from a checkout of the tool's repository at main, and the plugins the
+# configuration declares are exposed to it by hand, where the published preset
+# ships them installed. Once the `concordance` package is published, the
+# "Build the command line" and "Expose the plugins" steps become
 # `npm install --global concordance` and the build step `concordance build`,
-# as the pipelines guide of the tool shows.
+# as the pipelines guide of the tool shows; the container image variant of that
+# guide carries LibreOffice and removes the "Install LibreOffice" step too.
 #
 # One human step: in the settings of this repository, set Pages → Source to
 # "GitHub Actions" once.
@@ -53,6 +56,23 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm build
+      - name: Expose the plugins to the command line
+        # In a checkout, the plugins are workspace packages the core of the
+        # command line cannot resolve by name; the published preset ships them
+        # hoisted next to it.
+        working-directory: .tool
+        run: |
+          mkdir -p packages/core/node_modules/@concordance-wiki
+          for plugin in reader-vtt reader-office convert-libreoffice contract-openapi; do
+            ln -sfn "$PWD/plugins/$plugin" "packages/core/node_modules/@concordance-wiki/plugin-$plugin"
+          done
+      - name: Install LibreOffice
+        # The decks of the briefs are converted to PDF at build by the
+        # LibreOffice plugin; without the command the plugin disables itself
+        # with a finding and the decks stay downloadable, without preview.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-impress libreoffice-writer
       - uses: actions/cache@v4
         with:
           path: .concordance-cache
@@ -61,6 +81,7 @@ jobs:
       - run: node .tool/packages/cli/dist/bin.js validate-config
       - name: Build the wiki
         # The sources are cloned at their `main` ref; an error finding fails here, as build.fail_on says.
+        # The conversion cache lives in .concordance-cache, restored above, so an unchanged deck is never reconverted.
         run: node .tool/packages/cli/dist/bin.js build
       - name: Summary
         # The findings per severity and per check of dist/build.log.json, on the page of the run.

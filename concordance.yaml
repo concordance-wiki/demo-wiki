@@ -5,6 +5,17 @@ project:
   theme: ./theme.yaml
   edit_url: https://github.com/concordance-wiki/demo-{source}/edit/main/{path}
 profile: ./profile.yaml
+plugins:
+  # The readers, the converter and the contract importer the briefs and the
+  # specifications need; the published preset ships them all, the workflow
+  # exposes them from the checkout of the tool until then. The transcripts
+  # are read by the VTT reader, the decks and their PDF previews by the
+  # office reader and converted by LibreOffice, the contract of the model
+  # query API imported by the OpenAPI plugin.
+  - "@concordance-wiki/plugin-reader-vtt"
+  - "@concordance-wiki/plugin-reader-office"
+  - "@concordance-wiki/plugin-convert-libreoffice"
+  - "@concordance-wiki/plugin-contract-openapi"
 applications:
   # The command line is the default application of both sources; the screens
   # are re-filed under the site by a typing rule, the lint process under the
@@ -30,6 +41,11 @@ domains:
   - id: ingestion
     title: Ingestion
     folder: true
+    # The raw files of the briefs, transcripts, decks and previews, carry no
+    # frontmatter: the domain that owns transcripts and twin resources claims
+    # them by glob, and the minutes of a session say in frontmatter what the
+    # session was about.
+    match: ["meetings/**", "framing/**"]
     subdomains:
       - id: typing
         title: Typing and filing
@@ -53,6 +69,13 @@ domains:
 privacy:
   # The README of a content repository describes the repository, not the tool.
   exclude: ["README.md"]
+  # The transcripts of the briefs name the fictional participants of the
+  # corpus; the dictionary maps each name to a stable pseudonym and the build
+  # replaces the names before anything reads a transcript. The dictionary is
+  # committed because the names are invented; a real wiki keeps it out of every
+  # public repository. Transcripts are published only because this says so.
+  pseudonymize: { enabled: true, dictionary: ./pseudonyms.yaml }
+  publish_transcripts: true
 sources:
   - name: glossary
     git: https://github.com/concordance-wiki/demo-glossary.git
@@ -97,6 +120,25 @@ sources:
       - match: { path: "batches/**" }
         set: { type: batch }
       # The tables under `data/` carry `type: data_object` in their frontmatter.
+  - name: briefs
+    git: https://github.com/concordance-wiki/demo-briefs.git
+    ref: main
+    locale: en
+    application: concordance-cli
+    description: The working sessions of the project, each a folder of minutes, transcript and deck, and the framing decks.
+    # What no rule names is a document: the framing decks, their previews and
+    # their notes. The decks go through LibreOffice at build.
+    default_type: document
+    convert: true
+    rules:
+      # A folder glob types the sessions, every file of the folder alike: the
+      # minutes, the transcript, the deck and its preview, which the build then
+      # groups into one page.
+      - match: { path: "meetings/**" }
+        set: { type: meeting }
+      # An extension: a transcript is a meeting wherever it is filed.
+      - match: { ext: [".vtt"] }
+        set: { type: meeting }
 staleness:
   warn_after_days: { default: 120 }
 inference:
