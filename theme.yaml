@@ -1,6 +1,10 @@
+# Paths are relative to this file: the mark and the favicon are copies of the
+# brand files, so that the site fetches nothing from another host. The mark is
+# inlined in the header, its three lines drawn in currentColor so that they
+# follow the ink of either colour scheme.
 name: Concordance
-logo: https://raw.githubusercontent.com/concordance-wiki/concordance/main/brand/concordance-mark.svg
-favicon: https://raw.githubusercontent.com/concordance-wiki/concordance/main/brand/favicon.svg
+logo: brand/concordance-mark.svg
+favicon: brand/favicon.svg
 font:
   display: Instrument Serif
   ui: Instrument Sans
@@ -12,7 +16,7 @@ light:
   border: "#E4E1DA"
   ink: "#16181B"
   muted: "#4E5259"
-  accent: "#C24E24"
+  accent: "#B84820"
 dark:
   bg: "#0E0F11"
   surface: "#16181B"
@@ -27,4 +31,5 @@ footer:
     - { label: Source code, url: "https://github.com/concordance-wiki/concordance" }
     - { label: Glossary, url: "https://github.com/concordance-wiki/demo-glossary" }
     - { label: Specifications, url: "https://github.com/concordance-wiki/demo-specs" }
-  mention_tool: true
+  # The project's own wiki credits the tool; a white-label installation leaves this out.
+  credit: true
