@@ -4,6 +4,9 @@ project:
   locale: en
   theme: ./theme.yaml
   edit_url: https://github.com/concordance-wiki/demo-{source}/edit/main/{path}
+  # Where a call to action leads when no forge link can be built for it, the
+  # lead of a word without a note for instance: the repositories of the wiki.
+  contribute_url: https://github.com/orgs/concordance-wiki/repositories
 profile: ./profile.yaml
 plugins:
   # The readers, the converter and the contract importer the briefs and the
@@ -84,11 +87,85 @@ sources:
     type: term
     glossary: true
     application: concordance-cli
+    # The title names the space wherever the site shows it; the name stays the
+    # first segment of every identifier and of every address.
+    title: Glossary
+    description: The vocabulary of Concordance, one note per term, filed by domain.
+    # The folders of the repository are the domains; the site titles and
+    # describes them on the page of the space, in the tree and in the breadcrumbs.
+    folders:
+      ingestion:
+        title: Ingestion
+        description: Sources, documents, typing, configuration and the pipeline that reads them.
+      ingestion/typing:
+        title: Typing
+      inference:
+        title: Inference
+        description: Recognition, links, contracts and the canonical model.
+      inference/recognition:
+        title: Recognition
+      publication:
+        title: Publication
+        description: The site, its pages and its search.
+      quality:
+        title: Quality
+        description: Checks, findings, the linter and the plugins.
   - name: specs
     git: https://github.com/concordance-wiki/demo-specs.git
     ref: main
     locale: en
     application: concordance-cli
+    title: Specifications
+    description: The typed notes of the tool, screens, processes, rules, objects, APIs, roles and decisions.
+    folders:
+      screens:
+        title: Screens
+        description: What a reader sees and does, page by page and panel by panel.
+      screens/pages:
+        title: Pages
+      screens/panels:
+        title: Panels
+      viewers:
+        title: Viewers
+        description: The two viewers the site embeds, for documents and for contracts.
+      processes:
+        title: Processes
+        description: The build, the lint and the release, end to end.
+      rules:
+        title: Rules
+        description: What the build checks, one rule per check.
+      rules/links:
+        title: Links
+      rules/documents:
+        title: Documents
+      rules/vocabulary:
+        title: Vocabulary
+      rules/identifiers:
+        title: Identifiers
+      rules/contracts:
+        title: Contracts
+      rules/sources:
+        title: Sources
+      rules/engine:
+        title: Engine
+      objects:
+        title: Business objects
+        description: Source, resource, entity, link, finding and the others the model carries.
+      api:
+        title: APIs
+        description: The contracts the tool exposes and consumes, and their operations.
+      roles:
+        title: Roles
+        description: Who reads, writes, integrates and owns what.
+      batches:
+        title: Batches
+        description: The recurring jobs around the build.
+      data:
+        title: Tables
+        description: The tables of the canonical model, one note each.
+      decisions:
+        title: Decisions
+        description: The structuring decisions and what they affect.
     # A note no rule names is a decision: `decisions/` is only a filing
     # convention, and a note dropped in an unlisted folder such as `notes/`
     # gets the same type.
@@ -125,7 +202,15 @@ sources:
     ref: main
     locale: en
     application: concordance-cli
+    title: Briefs
     description: The working sessions of the project, each a folder of minutes, transcript and deck, and the framing decks.
+    folders:
+      meetings:
+        title: Meetings
+        description: One folder per working session, its minutes, its transcript and its deck.
+      framing:
+        title: Framing
+        description: The decks that frame the project, with their notes.
     # What no rule names is a document: the framing decks, their previews and
     # their notes. The decks go through LibreOffice at build.
     default_type: document
