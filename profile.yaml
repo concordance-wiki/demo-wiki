@@ -1,6 +1,9 @@
-# Project profile, merged over the default profile of the tool.
-# Empty on purpose: the default profile covers this wiki.
+# Project profile, merged over the default profile of the tool key by key.
+# One addition: a decision may name the decision that replaced it. The
+# reference produces the `supersedes` relation in the other direction, from
+# the newer decision to this one, so that either note may record the change.
 version: 1
-types: {}
-relations: {}
-confidence: {}
+types:
+  decision:
+    attributes:
+      superseded_by: { type: ref, target: decision, relation: supersedes, inverse: true }

@@ -1,4 +1,5 @@
-# Words of this corpus that are frequent without being business terms.
+# Words of this corpus that are frequent without being business terms: the
+# vocabulary of files and folders, then the verbs and counters the notes repeat.
 file
 files
 folder

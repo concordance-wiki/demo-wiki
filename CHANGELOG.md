@@ -1,5 +1,31 @@
 # Changelog
 
+## Structure
+
+The two content repositories restructured so that the wiki shows every way a corpus can be described: thematic folders in the glossary, nested families in the specifications, domains by folder, typing by folder glob, file name pattern, suffix, default type and frontmatter, three applications, three stopword files, a lock file with real decisions, a profile that extends a type. The README of this repository lists the scenarios. The wiki built from the tool's own checkout, the sources read from local clones, before and after.
+
+| | Before | After |
+|---|---|---|
+| Files read | 218 | 218 |
+| Entities | 1021 (107 terms, 805 keyword pages, 109 specifications) | 1010 (106 terms, 794 keyword pages, 110 specifications) |
+| Findings | 1935 (0 errors, 746 warnings, 1189 info) | 1939 (0 errors, 736 warnings, 1203 info) |
+| `W-TERM-UNDEFINED` | 746 | 736 |
+| `W-REF-UNRESOLVED` | 0 | 0 |
+| `W-DOMAIN-UNCLASSIFIED` | 2 | 0 |
+| `W-TYPE-UNKNOWN`, `W-APP-UNKNOWN`, `W-ATTRIBUTE-UNKNOWN` | 0 | 0 |
+| `I-TERM-HOMONYM` | 16 | 16 |
+| `W-DUP-CANDIDATE` | 27 | 19 |
+| `I-REL-AMBIGUOUS` | 1144 | 1168 |
+| `concordance lint` on each content repository | 0 findings | 0 findings |
+
+What changed and what the counts say:
+
+- The file count is unchanged although two notes were written (`notes/type-by-filing.md`, a decision typed by the source's default type, and `screens/pages/exploring-the-site.md`, a process filed among the screens on purpose): the README of each content repository, read as a term and as a document until now, is excluded by `privacy.exclude`. Hence one term and one specification fewer on that side. Twenty-three keyword pages disappear, eleven of them the interface words the new `stopwords.publication.txt` absorbs (`button`, `region`, `keyboard`, `heading`) and the others expressions the two READMEs carried over the threshold (`demo`, `story`, `layout`, `repository lint`); twelve appear, phrases of the two new notes (`entity at one hop`, `trail travels`, `highlighted property`).
+- `W-DOMAIN-UNCLASSIFIED` ×2, the two terms written after the domain globs of the first loop (`facet`, `folder domain`), disappear with the globs themselves: every domain is now a folder, and a note filed in a new folder under one of them is classified without a change to the configuration. Fixed.
+- `W-DUP-CANDIDATE` drops from 27 to 19: the pairs of glossary terms with close base names in one flat folder (`build` and `build-log`, `local-check` and `locale`, `markdown` and `markdown-link` among them) are no longer neighbours once the terms are filed by subject, and the two READMEs no longer meet. The pairs that remain are recorded as separated in `concordance.lock.yaml`; the build of this version accepts the lock without reading it, so the count stays.
+- `W-TERM-UNDEFINED` loses twenty-seven expressions, the same interface words and README phrases, and gains seventeen from the two new notes; `I-REL-AMBIGUOUS` grows by 24 with the glossary occurrences of the two new notes. Neither asks for a change beyond what the next loop of terms will bring.
+- Every check of the tool keeps its rule note, every page slot its screen note, every active type at least one note and every configuration key its term: the parity script of the tool's repository is green on the three restructured checkouts.
+
 ## First loop
 
 The wiki built from the tool's own checkout, the sources read from local clones of the two content repositories, before and after the first pass over its findings.

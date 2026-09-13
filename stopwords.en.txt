@@ -1,4 +1,6 @@
-# Extra English stopwords for this wiki, one per line. The language pack of the tool provides the common ones.
+# General English words this wiki adds to the stopwords of the language pack,
+# one per line; a title or an alias made only of stopwords never enters the
+# dictionary and never becomes a keyword page.
 also
 either
 however

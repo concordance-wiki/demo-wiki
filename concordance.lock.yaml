@@ -1,2 +1,31 @@
+# Human decisions the build applies over its inferences. Every entry answers
+# a finding of a build of this wiki; the build reads the file through the
+# `lock` key of concordance.yaml.
 version: 1
-rejected_terms: []
+# Expressions the keyword discovery proposed (W-TERM-UNDEFINED) that are not
+# terms: fragments cut across a comma or a full stop, and the sentence every
+# rule note repeats.
+rejected_terms:
+  - "Check , severity"
+  - "Check , severity error"
+  - "Check , severity info"
+  - "check pages. The severity"
+  - "project or per repository"
+  - "provenance. A link"
+  - "finding, never a crash"
+  - "entity, link"
+  - "model, entity"
+  - "contract the build"
+  - "note describes"
+  - "storage of the browser"
+duplicates:
+  # Pairs the twin detection reported (W-DUP-CANDIDATE) on the likeness of
+  # their base names alone. Each is two notes, not two representations of one
+  # document: a term and the role of the same name, a term and the object of
+  # the same name, two terms whose spellings are close, two rules about the
+  # matching of operations.
+  separated:
+    - [glossary/ingestion/documents/reader, specs/roles/publication/reader]
+    - [glossary/inference/model/entity, specs/objects/inference/entity]
+    - [glossary/ingestion/configuration/configuration, glossary/ingestion/configuration/configuration-repository]
+    - [specs/rules/contracts/operation-unmatched, specs/rules/engine/operation-matching]

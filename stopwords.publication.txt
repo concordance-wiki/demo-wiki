@@ -1,0 +1,14 @@
+# Words of the user interface that the screen notes repeat without naming a
+# concept of the tool: the parts of a page and the ways of acting on it.
+button
+control
+article
+region
+body
+heading
+keyboard
+collapsible
+closed
+width
+total
+empty
