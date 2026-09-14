@@ -41,14 +41,13 @@ domains:
   # families of the specifications whose folder is named after a type rather
   # than a domain are claimed by a glob; a note filed elsewhere says its domain
   # in frontmatter.
+  # No declaration files the briefs: neither a folder of a domain's name on
+  # their path, nor a glob, nor a frontmatter `domain` on the minutes. The
+  # proposal under `inference.domains` files each session and each framing
+  # deck from the graph, next to the terms it names.
   - id: ingestion
     title: Ingestion
     folder: true
-    # The raw files of the briefs, transcripts, decks and previews, carry no
-    # frontmatter: the domain that owns transcripts and twin resources claims
-    # them by glob, and the minutes of a session say in frontmatter what the
-    # session was about.
-    match: ["meetings/**", "framing/**"]
     subdomains:
       - id: typing
         title: Typing and filing
@@ -232,6 +231,12 @@ inference:
   stopwords: [./stopwords.en.txt, ./stopwords.domain.txt, ./stopwords.publication.txt]
   keyword_pages: { min_occurrences: 3, min_files: 2 }
   neighbours: { k: 50 }
+  # The domains the graph proposes for the notes nothing files, the briefs:
+  # every term whose note has 10 to 60 neighbours is a pivot, a hub such as
+  # `build` or `note` is not, and a note within two steps of a pivot joins the
+  # pivot's domain. `assign` files the note with the origin `inferred`; without
+  # it the proposal stays a finding and a section of the build log.
+  domains: { min_neighbours: 10, max_neighbours: 60, radius: 2, assign: true }
 build:
   output: ./dist
   fail_on: { errors: true, unconverted_max: 10 }

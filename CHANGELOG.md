@@ -1,5 +1,27 @@
 # Changelog
 
+## Domains proposed
+
+The briefs are no longer filed by hand: the glob `meetings/**`, `framing/**` leaves the `ingestion` domain and the `domain:` line leaves the minutes of the three sessions, so that nothing declares where a session or a framing deck belongs. `inference.domains: { min_neighbours: 10, max_neighbours: 60, radius: 2, assign: true }` lets the build propose it from the graph and file the notes itself. The wiki built from the tool's own checkout, the sources read from local clones, before and after.
+
+| | Declared | Proposed |
+|---|---|---|
+| Files read | 265 | 265 |
+| Entities | 1018 | 1018 |
+| Findings | 2466 (0 errors, 809 warnings, 1657 info) | 2470 (0 errors, 809 warnings, 1661 info) |
+| `W-DOMAIN-UNCLASSIFIED` | 0 | 0 |
+| `I-DOMAIN-SUGGESTED` | 0 | 4 |
+| Pivots reaching a note | 0 | 4 (degrees 60, 58, 52, 30) |
+| Notes filed with the origin `inferred` | 0 | 4 |
+
+What the tool found and what changed:
+
+- **Every brief lands where its author had filed it, or better.** The theme override session joins `publication` through the colour scheme term (degree 60), the twin resources review joins `ingestion` through the extracted text (58), the contract import session joins `ingestion` through the fingerprint cache (30), and the roadmap deck joins `quality` through determinism (52). The minutes had declared `publication`, `ingestion` and `inference` for the three sessions: the third differs, and the graph has a point, the session is about what the importer reads and caches, less about what it infers.
+- **Hubs are not pivots.** Without `max_neighbours`, the first run took `build` (227 neighbours) and `note` (199) as pivots and reached every brief from them: a term so connected that it names no domain. The ceiling keeps the proposal to the terms of the middle of the graph; the tool gained the option in this loop, reported from here.
+- **A proposal names a declared domain.** Every pivot of this corpus sits in a folder of a domain's name, so the four notes join `publication`, `ingestion` and `quality` rather than domains named `colour-scheme` or `determinism` after their pivot, which is what a corpus with no declared domain at all would get. Reported from here too: the first run named the domains after the pivots even when the pivot was filed.
+- **The files of a session follow the session.** The transcript and the deck grouped into a session the proposal files were still reported as unclassified, seven `W-DOMAIN-UNCLASSIFIED` on the `.vtt`, `.pptx` and `.pdf` files; the unclassified finding of a file folded into a filed note is now answered with the note's. Reported from here.
+- The page of each brief shows its domain in italics, the reason on hovering; the rest of the counts is unchanged.
+
 ## Lock applied
 
 The build reads `concordance.lock.yaml`: the twelve rejected expressions and the four separated pairs recorded in the earlier loops now apply, with no change to the corpus. The wiki built from the tool's own checkout, the sources read from local clones, the same configuration with and without the `lock` key.
