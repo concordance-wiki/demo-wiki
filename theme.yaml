@@ -20,16 +20,18 @@ light:
   label: "#5E636B"
   accent: "#B84820"
   highlight: "#FBE3D4"
+# The dark palette of the default theme: a second palette measured on its own,
+# never an inversion of the light one, the accent raised to hold 4.5:1.
 dark:
-  bg: "#0E0F11"
-  surface: "#16181B"
-  soft: "#1C1F23"
-  border: "#26292E"
-  ink: "#E8E6E1"
-  muted: "#A7ADB5"
-  label: "#8B9199"
+  bg: "#0F1113"
+  surface: "#181B1E"
+  soft: "#22262A"
+  border: "#282C31"
+  ink: "#ECEAE6"
+  muted: "#A8AEB6"
+  label: "#8D939B"
   accent: "#E8703A"
-  highlight: "#4A2A1A"
+  highlight: "#4A2A1B"
 default_mode: system
 footer:
   text: The wiki of the Concordance project, built by Concordance from its own glossary and specifications.
