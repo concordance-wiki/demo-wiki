@@ -1,5 +1,27 @@
 # Changelog
 
+## Lock applied
+
+The build reads `concordance.lock.yaml`: the twelve rejected expressions and the four separated pairs recorded in the earlier loops now apply, with no change to the corpus. The wiki built from the tool's own checkout, the sources read from local clones, the same configuration with and without the `lock` key.
+
+| | Without the lock | With the lock |
+|---|---|---|
+| Files read | 249 | 249 |
+| Keyword pages | 691 | 686 |
+| Expressions set aside by confidence | 150 | 144 |
+| Findings | 2245 (0 errors, 734 warnings, 1511 info) | 2231 (0 errors, 723 warnings, 1508 info) |
+| `W-TERM-UNDEFINED` | 733 | 722 |
+| `W-DUP-CANDIDATE` | 27 | 24 |
+| Twin resources merged | 8 groups | 7 groups |
+| Decisions applied | none | 12 rejected terms, 0 merged, 4 separated |
+
+What the lock changed:
+
+- Eleven of the twelve rejected expressions were still proposed as `W-TERM-UNDEFINED`; they are gone, and with them the five that had a keyword page (`contract the build`, `finding, never a crash`, `model, entity`, `provenance. A link`, `storage of the browser`). The twelfth, `note describes`, had already stopped recurring; the decision stays recorded.
+- Three of the separated pairs were reported as `W-DUP-CANDIDATE` on their base names, the term and the role called reader, the term and the object called entity, the two rules about the matching of operations; they are neither scored nor reported.
+- The fourth pair, `configuration` and `configuration-repository`, was not a candidate: the reconciliation merged the two terms on the likeness of their base names, above the merge threshold, and the wiki showed one page for two concepts. Separated, each term has its page again, one entity more in the model.
+- The rest of the counts is unchanged: the lock adds nothing and settles only what it names.
+
 ## Every feature
 
 A third source, [demo-briefs](https://github.com/concordance-wiki/demo-briefs), brings the kinds of file the wiki had never read: three working sessions, each a folder of minutes and WebVTT transcript, one of them with the deck shown and its PDF preview, and one framing deck with its preview and its notes. The configuration declares the four plugins the corpus needs, converts the decks with LibreOffice, enables pseudonymisation on a committed dictionary of the four fictional participants and publishes the transcripts; the specifications gain the OpenAPI contract of the model query API, kept next to its note, and a sketch embedded by the entity page; the glossary gains the meeting, the deck and the preview. The wiki built from the tool's own checkout, the sources read from local clones, before and after.
