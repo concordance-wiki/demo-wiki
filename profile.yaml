@@ -1,10 +1,13 @@
 # Project profile, merged over the default profile of the tool key by key.
-# Two additions. A decision may name the decision that replaced it: the
+# Three additions. A decision may name the decision that replaced it: the
 # reference produces the `supersedes` relation in the other direction, from
 # the newer decision to this one, so that either note may record the change.
 # The minutes of a meeting may name their transcript under `source`, the key
 # the twin-resource reconciliation reads as a declaration, which the default
-# profile declares for documents only.
+# profile declares for documents only. A screen may name the operations it
+# calls under `calls`: the reference produces the `serves` relation the
+# default profile declares from the operation to the screen, so that the
+# screen counts among the callers of the operation on the page of its API.
 version: 1
 types:
   decision:
@@ -13,3 +16,6 @@ types:
   meeting:
     attributes:
       source: { type: string, label: { en: Source file, fr: Fichier source } }
+  screen:
+    attributes:
+      calls: { type: "ref[]", target: endpoint, relation: serves, inverse: true, label: { en: Calls, fr: Appelle } }
