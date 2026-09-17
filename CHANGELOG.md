@@ -1,5 +1,69 @@
 # Changelog
 
+## Questions asked from the command line
+
+The wiki answers from the terminal what it shows on its pages: `concordance query` reads the model of this corpus, built from the three repositories, and prints what it knows, for a person or for an agent. A session on the corpus as built on 16 September 2026, the answers as printed, the ages of the model left out.
+
+```
+$ concordance query "keyword page"
+"keyword page" names 2 entities; ask for one by its identifier:
+  specs/objects/inference/recognition/keyword-page — Keyword page [business_object · domain inference/recognition]
+  specs/screens/pages/keyword-page — Keyword page [screen · domain publication]
+```
+
+Two notes carry the title and neither is a term, so nothing is guessed: the command lists them and exits with 1. The glossary term is `keyword`, and it wins as soon as its title or an alias is asked for.
+
+```
+$ concordance query --search "threshold" --type rule --limit 3
+3 results for "threshold" (the index of the site)
+  specs/rules/vocabulary/suggested-domain — Suggested domain [rule · quality] 3.00
+  specs/rules/sources/stale-source — Stale source [rule · quality] 3.00
+  specs/rules/vocabulary/undefined-term — Undefined term [rule · quality] 3.00
+
+facets
+  type business_object 4, decision 2, keyword 4, process 1, rule 3, screen 9, term 10
+  source specs 3
+  domain quality 3
+  application concordance-cli 3
+```
+
+The same ranking as the results page, the facets counted under the filters of the others, so that the reader sees what selecting another type would keep.
+
+```
+$ concordance query --text "one page of the wiki" --limit 4
+2 passages hold "one page of the wiki"
+  briefs/meetings/2026/2026-08-27-theme-override-model/theme-override-model — Theme override model [meeting]
+    meetings/2026/2026-08-27-theme-override-model/theme-override-model.pdf#page 1  …Deck, minutes and transcript are grouped into one page of the wiki. Theme override model · 2026-08-27 · 1/6
+    meetings/2026/2026-08-27-theme-override-model/theme-override-model.pptx#slide 1  …Deck, minutes and transcript are grouped into one page of the wiki. Theme override model · 2026-08-27 · 1/6
+```
+
+A phrase read on a slide and on its PDF preview, which no grep of the markdown finds; a phrase spoken in a session comes back with the timecode and the speaker of its cue.
+
+```
+$ concordance query --undefined --min-files 3 --limit 5
+857 recurring expressions without a note
+  form — 36 files, 52 occurrences · confidence 0.71 · page
+  panel — 34 files, 97 occurrences · confidence 0.86 · page
+  key — 34 files, 46 occurrences · confidence 0.69 · page
+  expression — 33 files, 57 occurrences · confidence 0.84 · page
+  report — 33 files, 47 occurrences · confidence 0.76 · page
+  … 852 more
+```
+
+The to-do page as a list, the expressions met in the most files first: the next loop of the glossary starts here.
+
+```
+$ concordance query glossary/inference/recognition/keyword --explain specs/decisions/inference/keyword-page-threshold --context 1
+1 links between glossary/inference/recognition/keyword and specs/decisions/inference/keyword-page-threshold
+  ← affects 0.30, from 1 provenances
+    glossary_occurrence 0.30 decisions/inference/keyword-page-threshold.md:9 "keyword page"
+      :9  A keyword page exists from three occurrences in at least two files; below that, …
+```
+
+Why the model links the decision to the term: one mention, on one line, with its confidence, so that the link can be believed or doubted.
+
+Two notes were added for the scenario: the process [query](https://github.com/concordance-wiki/demo-specs/blob/main/processes/quality/query.md) in the specifications and the term [query](https://github.com/concordance-wiki/demo-glossary/blob/main/inference/model/query.md) in the glossary; the counts of the site move by two entities.
+
 ## Domains proposed
 
 The briefs are no longer filed by hand: the glob `meetings/**`, `framing/**` leaves the `ingestion` domain and the `domain:` line leaves the minutes of the three sessions, so that nothing declares where a session or a framing deck belongs. `inference.domains: { min_neighbours: 10, max_neighbours: 60, radius: 2, assign: true }` lets the build propose it from the graph and file the notes itself. The wiki built from the tool's own checkout, the sources read from local clones, before and after.

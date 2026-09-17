@@ -54,6 +54,8 @@ The four repositories exercise every way a corpus can be described and every kin
 
 **Plugins** (`plugins:` in `concordance.yaml`). The configuration lists the four plugins the corpus needs, the VTT reader, the office reader, the LibreOffice converter and the OpenAPI importer, by package name, as a wiki built with the published preset would; the workflow exposes them from the checkout of the tool until the preset is published, and installs LibreOffice, without which the converter disables itself with a finding and the decks stay downloadable without preview.
 
+**Asking the wiki from the command line** (`concordance query`, run where `concordance.yaml` stands or against `dist/model.json` from anywhere). The model this wiki renders answers an agent as it answers a person: `concordance query "keyword page"` names the note, where it is used with file and line, what it is linked to and the decisions that touched it; `concordance query --search "threshold" --type rule` runs the search of the site; `concordance query --text "one page of the wiki"` finds a phrase in the minutes, the transcripts and the decks with its timecode or slide; `concordance query --undefined --min-files 3` lists what nobody defined. The [CHANGELOG](CHANGELOG.md) records a session of questions on this corpus; the [querying guide](https://github.com/concordance-wiki/concordance/blob/main/docs/guides/querying.md) lists the questions the command answers.
+
 ## Building locally
 
 ```bash
