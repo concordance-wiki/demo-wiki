@@ -39,5 +39,6 @@ footer:
     - { label: Source code, url: "https://github.com/concordance-wiki/concordance" }
     - { label: Glossary, url: "https://github.com/concordance-wiki/demo-glossary" }
     - { label: Specifications, url: "https://github.com/concordance-wiki/demo-specs" }
+    - { label: Briefs, url: "https://github.com/concordance-wiki/demo-briefs" }
   # The project's own wiki credits the tool; a white-label installation leaves this out.
   credit: true

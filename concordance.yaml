@@ -20,7 +20,7 @@ plugins:
   - "@concordance-wiki/plugin-convert-libreoffice"
   - "@concordance-wiki/plugin-contract-openapi"
 applications:
-  # The command line is the default application of both sources; the screens
+  # The command line is the default application of the three sources; the screens
   # are re-filed under the site by a typing rule, the lint process under the
   # linter by its frontmatter.
   - id: concordance-cli
@@ -34,7 +34,7 @@ applications:
     status: active
 domains:
   # Every domain claims the files that have a folder of its name on their path,
-  # in both sources: `ingestion/sources/source.md` of the glossary and
+  # in every source: `ingestion/sources/source.md` of the glossary and
   # `objects/ingestion/source.md` of the specifications are filed together. A
   # subdomain declared by folder claims the files whose segment sits under its
   # parent's (`inference/recognition/`, `objects/inference/recognition/`). The
