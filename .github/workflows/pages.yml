@@ -52,11 +52,11 @@ jobs:
       # The published preset: the command line with every official plugin hoisted next to it, which
       # is what the guides tell a reader to run. Nothing of the tool's unreleased code runs in this
       # repository, which can write its own Pages. Bump the version here when the tool is released.
-      - run: npx --yes @concordance-wiki/concordance@0.4.0 validate-config
+      - run: npx --yes @concordance-wiki/concordance@1.0.0 validate-config
       - name: Build the wiki
         # The sources are cloned at their `main` ref; an error finding fails here, as build.fail_on says.
         # The conversion cache lives in .concordance-cache, restored above, so an unchanged deck is never reconverted.
-        run: npx --yes @concordance-wiki/concordance@0.4.0 build
+        run: npx --yes @concordance-wiki/concordance@1.0.0 build
       - name: Summary
         # The findings per severity and per check of dist/build.log.json, on the page of the run.
         run: |
